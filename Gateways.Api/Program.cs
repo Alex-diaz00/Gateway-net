@@ -1,6 +1,7 @@
 using Gateways.Common.Filters;
 using Gateways.Common.Helpers;
 using Gateways.Business.Bootstrapper;
+using Gateways.Data.Implementations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,9 +43,16 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+IServiceScope scope = app.Services.CreateScope();
+
+ObjectContext db = scope.ServiceProvider.GetRequiredService<ObjectContext>();
+
+db.Database.EnsureCreated();
+
+DatabaseInitializer.InitializeDatabase(db);
+
+
 app.Run();
 
 
-// This is required for test projects with WebApplicationFactory 
-// https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests
 public partial class Program { }

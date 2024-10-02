@@ -15,11 +15,13 @@ public class GatewayBaseModel
 public class GatewayGetModel : GatewayBaseModel
 {
     public string Id { get; set; } = default!;
+    
+    public IEnumerable<DeviceGetModel> Devices { get; set; } = new List<DeviceGetModel>();
 }
 
 public class GatewayGetDetailsModel : GatewayGetModel
 {
-    public IEnumerable<DeviceGetModel> Devices { get; set; } = new List<DeviceGetModel>();
+    
 }
 
 public class GatewayPostModel : GatewayBaseModel

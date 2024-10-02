@@ -31,8 +31,8 @@ public class CrudApiControllerBase<TEntity, TGet, TGetDetails, TPost, TPut, TKey
         var skip = pagination.Page * pagination.PageSize;
         var take = pagination.PageSize;
         var query = service.Query().AsNoTrackingWithIdentityResolution();
-        if (order != null)
-            query = order(query);
+        if (includer != null)
+            query = includer(query);
         var models = query.Skip(skip).Take(pagination.PageSize).ToList();
         var hasPrevious = skip > 0 && (models.Count != 0 || query.Skip(skip - take).Any());
         var hasNext = models.Count == pagination.PageSize && query.Skip(skip + take).Any();
